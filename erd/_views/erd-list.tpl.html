@@ -1,0 +1,162 @@
+<div class="row infra-provider">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h1 class="page-title txt-color-blueDark">
+      <i class="fa fa-fw fa-gear"></i>
+      Infrastructure
+          <span>&nbsp;>&nbsp;
+            <i class="fa fa-fw fa-file-text"></i> Continuous Delivery Profiles
+          </span>
+    </h1>
+
+    <div class="pull-right m-t-50n">
+      <div class="btn-group">
+        <button type="button"
+                class="btn btn-primary btn-sm dropdown-toggle"
+                data-ng-click="erdListController.createERDResource()"
+                data-toggle="dropdown"
+                aria-expanded="false">
+          <span class="glyphicon glyphicon-plus"></span>
+          Create New
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row" data-ng-if="erdListController.erdResources.length == 0">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <p class="placeholder-text">
+              There are no continuous delivery profiles defined yet. Click on <b>"Create
+              New"</b>
+              button to start creating a new one now.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section data-widget-grid="" id="ng-widget-grid"
+             data-ng-if="erdListController.erdResources.length > 0">
+      <div class="row erd-list-cntr" data-tile-manager="">
+        <article class="col-lg-6 col-md-6 col-sm-12 col-xs-12"
+                 data-ng-repeat="erd in erdListController.erdResources">
+          <div class="jarviswidget jarviswidget-sortable jarviswidget-color-blueLight" id="erd-{{erd.id}}">
+            <header>
+              <h2>
+                <span data-ng-if="erd.name.length>40" data-tooltip-placement="top" data-tooltip="{{erd.name}}">{{erd.name | characters:40 :true }} </span>
+                <span data-ng-if="erd.name.length<40">{{erd.name}} </span>
+              </h2>
+
+              <div class="widget-toolbar" role="menu">
+                <div class="btn-group">
+                  <button class="btn dropdown-toggle btn-xs btn-default" data-toggle="dropdown">
+                    Actions <i class="fa fa-caret-down"></i>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="" ng-click="erdListController.openERDResource(erd)"><i
+                      class="fa fa-fw fa-eye"></i> Open</a></li>
+                  </ul>
+                </div>
+              </div>
+            </header>
+            <div class="widget-body cursor-pointer desc-cntr tile-sub-cntr"
+                 ng-click="erdListController.openERDResource(erd)">
+              <div class="row">
+                <div class="col-md-4"><p>{{erd.description}}</p></div>
+                <div class="col-md-8">
+                  <table class="two-col-table">
+                    <tbody>
+                      <tr>
+                        <td colspan="2" class="bold simple-border">CI Details</td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left xs-top-padding">
+                          Type:
+                        </td>
+                        <td class="right">
+                          {{erdListController.erdDataService.getDisplayNameForCIServer(erd.ciServer)}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          Server URL:
+                        </td>
+                        <td class="right">
+                          {{erd.ciServer.url}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          User Name:
+                        </td>
+                        <td class="right">
+                          {{erd.ciServer.username}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2"  class="bold simple-border extra-top-padding">VCS Details</td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left xs-top-padding">
+                          Type:
+                        </td>
+                        <td class="right">
+                          {{erdListController.erdDataService.getDisplayNameForVCSServer(erd.versionControlSystem)}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          Base URL:
+                        </td>
+                        <td class="right">
+                          {{erd.versionControlSystem.url}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          User Name:
+                        </td>
+                        <td class="right">
+                          {{erd.versionControlSystem.username}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" class="bold simple-border extra-top-padding">Binary Repo Details</td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left xs-top-padding">
+                          Type:
+                        </td>
+                        <td class="right">
+                          {{erdListController.erdDataService.getDisplayNameForBinaryRepoServer(erd.binaryRepository)}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          Repo URL:
+                        </td>
+                        <td class="right">
+                          {{erd.binaryRepository.url}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="left ta-left">
+                          User Name:
+                        </td>
+                        <td class="right">
+                          {{erd.binaryRepository.username}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>

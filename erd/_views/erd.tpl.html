@@ -1,0 +1,279 @@
+<div class="row infra-provider">
+  <div class="col-xs-12 col-sm-7 col-md-6 col-lg-6">
+    <h1 class="page-title txt-color-blueDark">
+      <i class="fa fa-fw fa-file-text"></i>
+      Continuous Delivery Profile
+          <span>&nbsp;>&nbsp;
+             {{erdController.mainTitle}}
+          </span>
+    </h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <form role="form"
+          id="erdForm"
+          name="erdController.erdForm"
+          class="general-form"
+          novalidate="novalidate"
+          data-ng-submit="erdController.saveERDResource()">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 p-20 p-r-0">
+
+          <div class="form-group">
+            <label for="erdName">Name<span class="required">*</span>:</label>
+            <input class="form-control"
+                   type="text"
+                   data-ng-model="erdController.erdResource.name"
+                   id="erdName"
+                   placeholder="Enter Name of the Continuous Delivery Profile"
+                   data-ng-maxlength="255"
+                   required/>
+          </div>
+          <div class="form-group">
+            <label for="erdDescription">Description:</label>
+          <textarea class="form-control"
+                    rows="4"
+                    id="erdDescription"
+                    data-ng-model="erdController.erdResource.description"
+                    placeholder="Enter Description of the Continuous Delivery Profile"
+                    data-ng-maxlength="255">
+
+          </textarea>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 p-20 col-md-6 col-lg-6">
+          <div class="m-t-25 resources">
+            <accordion close-others="true">
+              <accordion-group is-open="erdController.resourcePanes['ci']">
+                <accordion-heading>
+                  <i class="fa" ng-class="{'fa-caret-down':erdController.resourcePanes['ci'],'fa-caret-right':!erdController.resourcePanes['ci']}"></i>
+                  Continous Details
+                </accordion-heading>
+                <div  id="erd-ci-details-cntr">
+                  <div class="form-group">
+                      <label for="ciType">Type<span class="required">*</span>:</label>
+                      <select id="ciType"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.ciServer.type"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">-- Select CI Type -- </option>
+                        <option
+                          data-ng-repeat="ci in erdController.ciTypes"
+                          value="{{ci.value}}">{{ci.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="ciVersion">Version<span class="required">*</span>:</label>
+                      <select id="ciVersion"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.ciServer.version"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">-- Select CI Version -- </option>
+                        <option
+                          data-ng-repeat="ciVersion in erdController.ciVersions"
+                          value="{{ciVersion.value}}">{{ciVersion.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="ciURL">CI Server URL<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.ciServer.url"
+                             id="ciURL"
+                             placeholder="Enter CI Server URL"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="ciUserName">User Name<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.ciServer.username"
+                             id="ciUserName"
+                             placeholder="Enter User Name"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="ciPassword">Password<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="password"
+                             data-ng-model="erdController.erdResource.ciServer.password"
+                             id="ciPassword"
+                             placeholder="Enter Password"
+                             required/>
+                    </div>
+                </div>
+              </accordion-group>
+              <accordion-group is-open="erdController.resourcePanes['vcs']">
+                <accordion-heading>
+                  <i class="fa" ng-class="{'fa-caret-down':erdController.resourcePanes['vcs'],'fa-caret-right':!erdController.resourcePanes['vcs']}"></i>
+                  Version Control System Details
+                </accordion-heading>
+                <div  id="erd-vcs-details-cntr">
+                  <div class="form-group">
+                      <label for="vcsType">Type<span class="required">*</span>:</label>
+                      <select id="vcsType"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.versionControlSystem.type"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">--Select VCS Type--</option>
+                        <option
+                          data-ng-repeat="vcs in erdController.vcsTypes"
+                          value="{{vcs.value}}">{{vcs.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="vcsVersion">Version<span class="required">*</span>:</label>
+                      <select id="vcsVersion"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.versionControlSystem.version"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">--Select VCS Version --</option>
+                        <option
+                          data-ng-repeat="vcsVersion in erdController.vcsVersions"
+                          value="{{vcsVersion.value}}">{{vcsVersion.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="vcsURL">Base URL<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.versionControlSystem.url"
+                             id="vcsURL"
+                             placeholder="Enter Base URL"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="vcsUserName">User Name<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.versionControlSystem.username"
+                             id="vcsUserName"
+                             placeholder="Enter User Name"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="vcsPassword">Password<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="password"
+                             data-ng-model="erdController.erdResource.versionControlSystem.password"
+                             id="vcsPassword"
+                             placeholder="Enter Password"
+                             required/>
+                    </div>
+                </div>
+              </accordion-group>
+              <accordion-group is-open="erdController.resourcePanes['binaryrepo']">
+                <accordion-heading>
+                  <i class="fa" ng-class="{'fa-caret-down':erdController.resourcePanes['binaryrepo'],'fa-caret-right':!erdController.resourcePanes['binaryrepo']}"></i>
+                  Binary Repository Details
+                </accordion-heading>
+                <div id="erd-binary-repo-details-cntr">
+                  <div class="form-group">
+                      <label for="binRepoType">Type<span class="required">*</span>:</label>
+                      <select id="binRepoType"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.binaryRepository.type"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">-- Select Binary Repo Type -- </option>
+                        <option
+                          data-ng-repeat="repo in erdController.binaryRepoTypes"
+                          value="{{repo.value}}">{{repo.name}}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="binRepoVersion">Version<span class="required">*</span>:</label>
+                      <select id="binRepoVersion"
+                              class="form-control"
+                              data-ng-model="erdController.erdResource.binaryRepository.version"
+                              required
+                              data-select-valid-option>
+                        <option value="-1">-- Select Binary Repo Version -- </option>
+                        <option
+                          data-ng-repeat="repoVersion in erdController.binaryRepoVersions"
+                          value="{{repoVersion.value}}">{{repoVersion.name}}
+                        </option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="binRepoTypeURL">Repository URL<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.binaryRepository.url"
+                             id="binRepoTypeURL"
+                             placeholder="Enter Repository URL"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="binRepoUserName">User Name<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="text"
+                             data-ng-model="erdController.erdResource.binaryRepository.username"
+                             id="binRepoUserName"
+                             placeholder="Enter User Name"
+                             required/>
+                    </div>
+                    <div class="form-group">
+                      <label for="binRepoPassword">Password<span class="required">*</span>:</label>
+                      <input class="form-control"
+                             type="password"
+                             data-ng-model="erdController.erdResource.binaryRepository.password"
+                             id="binRepoPassword"
+                             placeholder="Enter Password"
+                             required/>
+                    </div>
+                  </div>
+              </accordion-group>
+            </accordion>
+          </div>
+        </div>
+      </div>
+      <div class="row p-20 actions">
+        <div class="form-group">
+          <input type="hidden"
+                 class="form-control"
+                 data-ng-model="erdController.randomCIValue"
+                 data-v-key="ci"
+                 data-v-dom-id="erd-ci-details-cntr"
+                 data-check-dom-validity/>
+        </div>
+
+        <div class="form-group">
+          <input type="hidden"
+                 class="form-control"
+                 data-ng-model="erdController.randomVCSValue"
+                 data-v-key="vcs"
+                 data-v-dom-id="erd-vcs-details-cntr"
+                 data-check-dom-validity/>
+        </div>
+
+        <div class="form-group">
+          <input type="hidden"
+                 class="form-control"
+                 data-ng-model="erdController.randomBinaryRepoValue"
+                 data-v-key="binaryrepo"
+                 data-v-dom-id="erd-binary-repo-details-cntr"
+                 data-check-dom-validity/>
+        </div>
+        <input type="reset" class="btn btn-default" value="Cancel"
+               data-ng-click="erdController.showERDListView()"/>
+        <input type="submit" class="btn btn-primary"
+               value="Save"/>
+      </div>
+    </form>
+    <div data-fc-ui-mask data-data="erdController.erdMask"></div>
+  </div>
+</div>
